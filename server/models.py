@@ -28,6 +28,7 @@ class Camper(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=func.now())
     signups = db.relationship('Signup', backref='camper', lazy=True)
     # activities = db.relationship('Activity', secondary='signups', backref='campers', lazy=True)
+    serialize_rules = ('-signups', '-created_at','-updated_at',)
 
 class Activity(db.Model, SerializerMixin):
     __tablename__ = 'activities'
@@ -40,7 +41,7 @@ class Activity(db.Model, SerializerMixin):
 
     signups = db.relationship('Signup', backref='activity', lazy=True)
     # campers = db.relationship('Camper', secondary='signups', backref='activities', lazy=True)
-
+    serialize_rules = ('-signups',)
 
 class Signup(db.Model, SerializerMixin):
     __tablename__ = 'signups'
